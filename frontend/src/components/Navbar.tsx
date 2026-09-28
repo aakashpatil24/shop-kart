@@ -19,7 +19,7 @@ import {
 import { toast } from "../utils/toast";
 
 const Navbar = () => {
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, user, loading, logout } = useAuth();
   const { items } = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -74,7 +74,7 @@ const Navbar = () => {
             <Home size={16} />
             Home
           </Link>
-          {isAuthenticated && (
+          {!loading && isAuthenticated && (
             <Link
               to="/my-products"
               className="flex items-center gap-1.5 text-gray-300 hover:text-white text-sm font-medium transition-colors"
@@ -93,7 +93,12 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-6">
-          {isAuthenticated ? (
+          {loading ? (
+            <div className="flex items-center gap-3">
+              <div className="w-24 h-9 bg-gray-800 rounded-full animate-pulse" />
+              <div className="w-6 h-6 bg-gray-800 rounded-full animate-pulse" />
+            </div>
+          ) : isAuthenticated ? (
             <>
               <div className="relative" ref={userMenuRef}>
                 <button
@@ -207,7 +212,9 @@ const Navbar = () => {
             <Info size={18} />
             About
           </Link>
-          {isAuthenticated ? (
+          {loading ? (
+            <div className="h-9 bg-gray-800 rounded-lg animate-pulse" />
+          ) : isAuthenticated ? (
             <>
               <p className="text-gray-400 text-sm">
                 Hi, <span className="text-white font-medium">{user?.name}</span>
