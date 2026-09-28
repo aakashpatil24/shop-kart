@@ -35,7 +35,7 @@ export const errorHandler = (
     message = "Validation failed";
     errors = Object.values(err.errors).map((e) => ({
       field: e.path,
-      message: e.message,
+      message: (e as Error).message,
     }));
   } else if (err instanceof mongoose.Error.CastError) {
     statusCode = 400;
