@@ -38,8 +38,8 @@ backend/src/
 
 frontend/src/
   routes.tsx                   all <Route> definitions
-  pages/                       Home, Login, Register, ProductDetail, Cart, Checkout,
-                                OrderHistory, MyProducts, ProductForm
+  pages/                       Home, About, Login, Register, ProductDetail, Cart,
+                                Checkout, OrderHistory, MyProducts, ProductForm
   components/                  Navbar, Footer, ProductCard, CartItem, ProtectedRoute
   context/AuthContext.tsx      in-memory access token + silent login
   lib/                         axios instance + interceptors, tokenStore
@@ -93,7 +93,11 @@ params), no stack traces leaked in production.
 ## Frontend Features
 
 **Shopping**
+- Navbar with **Home**, **Sell** (own listings, authenticated only), and **About**
+  links, plus the cart/account menu
 - Product grid with search, category filter, sort, and skeleton loading states
+- Home page nudges logged-in users with a "List it in My Products" prompt so it's
+  clear anyone can sell, not just browse
 - Product detail page with stock-aware "Add to Cart" (disabled + "Out of Stock" label
   when `stock <= 0`)
 - Cart with quantity +/− controls **capped at the product's current stock** — the "+"
@@ -104,6 +108,9 @@ params), no stack traces leaked in production.
   order — if stock ran out in the meantime, the order is not saved, the cart is left
   intact, and the real backend error message is toasted to the user
 - Order history persisted per-user in `localStorage` (no backend order model)
+
+**About page** (`/about`) — static company info: values (Trust, Speed, Community,
+Quality), team profiles, and a CTA back to the product grid
 
 **Product Management** ("My Products" / "Sell an Item" — any authenticated user, not
 admin-only, mirrors the backend's ownership model)

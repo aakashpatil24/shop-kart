@@ -57,7 +57,7 @@ const MyProducts = () => {
           className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-colors"
         >
           <Plus size={16} />
-          Add Product
+          List a Product
         </button>
       </div>
 

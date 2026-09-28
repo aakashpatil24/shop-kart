@@ -1,12 +1,15 @@
-﻿import { useDispatch } from "react-redux";
+﻿import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { setCategory, setSearchQuery } from "../app/features/productSlice";
 import useProducts from "../hooks/useProducts";
 import ProductCard from "../components/ProductCard";
-import { Search, SlidersHorizontal } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
+import { Search, SlidersHorizontal, PackagePlus } from "lucide-react";
 import type { AppDispatch } from "../app/store";
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { isAuthenticated } = useAuth();
   const { items, categories, selectedCategory, searchQuery, loading, error } =
     useProducts();
 
@@ -38,6 +41,15 @@ const Home = () => {
           Shop the latest trends at unbeatable prices. Quality products
           delivered to your door.
         </p>
+        {isAuthenticated && (
+          <Link
+            to="/my-products"
+            className="inline-flex items-center gap-2 mt-5 text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors"
+          >
+            <PackagePlus size={16} />
+            Have something to sell? List it in My Products
+          </Link>
+        )}
       </div>
 
       <div className="relative max-w-lg mx-auto mb-10">

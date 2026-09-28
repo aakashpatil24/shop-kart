@@ -13,6 +13,8 @@ import {
   ClipboardList,
   Package,
   PackagePlus,
+  Home,
+  Info,
 } from "lucide-react";
 import { toast } from "../utils/toast";
 
@@ -64,6 +66,32 @@ const Navbar = () => {
           Shop<span className="text-purple-400">Cart</span>
         </Link>
 
+        <div className="hidden md:flex items-center gap-8">
+          <Link
+            to="/"
+            className="flex items-center gap-1.5 text-gray-300 hover:text-white text-sm font-medium transition-colors"
+          >
+            <Home size={16} />
+            Home
+          </Link>
+          {isAuthenticated && (
+            <Link
+              to="/my-products"
+              className="flex items-center gap-1.5 text-gray-300 hover:text-white text-sm font-medium transition-colors"
+            >
+              <PackagePlus size={16} />
+              Sell
+            </Link>
+          )}
+          <Link
+            to="/about"
+            className="flex items-center gap-1.5 text-gray-300 hover:text-white text-sm font-medium transition-colors"
+          >
+            <Info size={16} />
+            About
+          </Link>
+        </div>
+
         <div className="hidden md:flex items-center gap-6">
           {isAuthenticated ? (
             <>
@@ -100,7 +128,7 @@ const Navbar = () => {
                       className="w-full px-4 py-3 text-left text-sm text-gray-200 hover:bg-gray-800 transition-colors flex items-center gap-2"
                     >
                       <Package size={16} className="text-purple-400" />
-                      My Products
+                      Sell
                     </button>
                     <button
                       onClick={() => {
@@ -163,6 +191,22 @@ const Navbar = () => {
 
       {menuOpen && (
         <div className="md:hidden bg-gray-900 border-t border-gray-800 px-4 py-4 space-y-3">
+          <Link
+            to="/"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center gap-2 text-gray-300 hover:text-purple-400"
+          >
+            <Home size={18} />
+            Home
+          </Link>
+          <Link
+            to="/about"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center gap-2 text-gray-300 hover:text-purple-400"
+          >
+            <Info size={18} />
+            About
+          </Link>
           {isAuthenticated ? (
             <>
               <p className="text-gray-400 text-sm">
@@ -195,7 +239,7 @@ const Navbar = () => {
                 className="flex items-center gap-2 text-gray-300 hover:text-purple-400"
               >
                 <Package size={18} />
-                My Products
+                Sell
               </Link>
               <Link
                 to="/sell"
