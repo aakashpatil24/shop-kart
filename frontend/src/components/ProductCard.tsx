@@ -59,7 +59,7 @@ const ProductCard = ({ product }: { product: Product }) => {
 
           <div className="flex items-center justify-between mt-auto gap-3">
             <span className="text-white text-xl font-bold">
-              ${product.price.toFixed(2)}
+              ₹{product.price.toFixed(2)}
             </span>
             <button
               onClick={handleAddToCart}

@@ -17,8 +17,8 @@ const Cart = () => {
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
-  const shipping = subtotal > 50 ? 0 : 5.99;
-  const tax = subtotal * 0.08;
+  const shipping = subtotal > 499 ? 0 : 49;
+  const tax = subtotal * 0.18;
   const total = subtotal + shipping + tax;
 
   if (items.length === 0) {
@@ -92,7 +92,7 @@ const Cart = () => {
                   Subtotal (
                   {items.reduce((sum, item) => sum + item.quantity, 0)} items)
                 </span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>₹{subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-gray-400 text-sm">
                 <span>Shipping</span>
@@ -100,18 +100,18 @@ const Cart = () => {
                   {shipping === 0 ? (
                     <span className="text-green-400">FREE</span>
                   ) : (
-                    `$${shipping.toFixed(2)}`
+                    `₹${shipping.toFixed(2)}`
                   )}
                 </span>
               </div>
               <div className="flex justify-between text-gray-400 text-sm">
-                <span>Tax (8%)</span>
-                <span>${tax.toFixed(2)}</span>
+                <span>GST (18%)</span>
+                <span>₹{tax.toFixed(2)}</span>
               </div>
               <div className="border-t border-gray-700 pt-4 flex justify-between">
                 <span className="text-white font-bold text-lg">Total</span>
                 <span className="text-white font-bold text-xl">
-                  ${total.toFixed(2)}
+                  ₹{total.toFixed(2)}
                 </span>
               </div>
             </div>
@@ -129,7 +129,7 @@ const Cart = () => {
             <div className="bg-purple-900/20 border border-purple-800/30 rounded-xl p-4 text-sm text-purple-300">
               🚚 Add{" "}
               <span className="font-bold text-white">
-                ${(50 - subtotal).toFixed(2)}
+                ₹{(499 - subtotal).toFixed(2)}
               </span>{" "}
               more for free shipping!
             </div>

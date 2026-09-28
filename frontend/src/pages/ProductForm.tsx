@@ -204,7 +204,7 @@ const ProductForm = () => {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm text-gray-400 mb-2 font-medium">
-                Price ($)
+                Price (₹)
               </label>
               <input
                 type="number"
@@ -214,7 +214,7 @@ const ProductForm = () => {
                   valueAsNumber: true,
                   min: { value: 0, message: "Price must be 0 or more" },
                 })}
-                placeholder="29.99"
+                placeholder="1299"
                 className={`w-full bg-gray-800 border ${errors.price ? "border-red-500" : "border-gray-700"} text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/30 transition-all placeholder-gray-600`}
               />
               {errors.price && (

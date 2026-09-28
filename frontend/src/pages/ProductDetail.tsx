@@ -96,10 +96,10 @@ const ProductDetail = () => {
 
           <div className="flex items-baseline gap-2 mb-6">
             <span className="text-4xl font-bold text-white">
-              ${product.price.toFixed(2)}
+              ₹{product.price.toFixed(2)}
             </span>
             <span className="text-gray-500 text-sm line-through">
-              ${(product.price * 1.2).toFixed(2)}
+              ₹{(product.price * 1.2).toFixed(2)}
             </span>
             <span className="text-green-400 text-sm font-medium">20% off</span>
           </div>
@@ -145,7 +145,7 @@ const ProductDetail = () => {
           <div className="flex items-center gap-4 mt-6 pt-6 border-t border-gray-800">
             <div className="text-center">
               <p className="text-white text-xs font-medium">🚚 Free Delivery</p>
-              <p className="text-gray-500 text-xs">Orders over $50</p>
+              <p className="text-gray-500 text-xs">Orders over ₹499</p>
             </div>
             <div className="w-px h-8 bg-gray-800" />
             <div className="text-center">

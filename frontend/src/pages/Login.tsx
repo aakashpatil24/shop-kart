@@ -89,7 +89,7 @@ const Login = () => {
                     message: "Enter a valid email address",
                   },
                 })}
-                placeholder="john@example.com"
+                placeholder="rohan@example.com"
                 className={`w-full bg-gray-800 border ${errors.email ? "border-red-500" : "border-gray-700"} text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/30 transition-all placeholder-gray-600`}
               />
               {errors.email && (

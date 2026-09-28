@@ -128,7 +128,7 @@ const MyProducts = () => {
               </div>
 
               <p className="text-white font-bold text-lg">
-                ${product.price.toFixed(2)}
+                ₹{product.price.toFixed(2)}
               </p>
 
               <div className="flex items-center gap-2">

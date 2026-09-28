@@ -83,8 +83,8 @@ const Checkout = () => {
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
-  const shipping = subtotal > 50 ? 0 : 5.99;
-  const tax = subtotal * 0.08;
+  const shipping = subtotal > 499 ? 0 : 49;
+  const tax = subtotal * 0.18;
   const total = subtotal + shipping + tax;
 
   const shippingFields: (keyof CheckoutFormValues)[] = [
@@ -283,7 +283,7 @@ const Checkout = () => {
                     {...register("firstName", {
                       required: "First name is required",
                     })}
-                    placeholder="John"
+                    placeholder="Rohan"
                     className={inputClass(errors.firstName)}
                   />
                   <FieldError error={errors.firstName} />
@@ -295,7 +295,7 @@ const Checkout = () => {
                     {...register("lastName", {
                       required: "Last name is required",
                     })}
-                    placeholder="Doe"
+                    placeholder="Sharma"
                     className={inputClass(errors.lastName)}
                   />
                   <FieldError error={errors.lastName} />
@@ -311,7 +311,7 @@ const Checkout = () => {
                         message: "Enter a valid email address",
                       },
                     })}
-                    placeholder="john@example.com"
+                    placeholder="rohan@example.com"
                     className={inputClass(errors.email)}
                   />
                   <FieldError error={errors.email} />
@@ -323,7 +323,7 @@ const Checkout = () => {
                     {...register("address", {
                       required: "Street address is required",
                     })}
-                    placeholder="123 Main Street, Apt 4B"
+                    placeholder="221B, MG Road, Andheri West"
                     className={inputClass(errors.address)}
                   />
                   <FieldError error={errors.address} />
@@ -333,7 +333,7 @@ const Checkout = () => {
                   <label className={labelClass}>City</label>
                   <input
                     {...register("city", { required: "City is required" })}
-                    placeholder="New York"
+                    placeholder="Mumbai"
                     className={inputClass(errors.city)}
                   />
                   <FieldError error={errors.city} />
@@ -343,23 +343,23 @@ const Checkout = () => {
                   <label className={labelClass}>State</label>
                   <input
                     {...register("state", { required: "State is required" })}
-                    placeholder="NY"
+                    placeholder="Maharashtra"
                     className={inputClass(errors.state)}
                   />
                   <FieldError error={errors.state} />
                 </div>
 
                 <div>
-                  <label className={labelClass}>ZIP Code</label>
+                  <label className={labelClass}>PIN Code</label>
                   <input
                     {...register("zip", {
-                      required: "ZIP code is required",
+                      required: "PIN code is required",
                       pattern: {
-                        value: /^\d{4,10}$/,
-                        message: "Enter a valid ZIP code",
+                        value: /^\d{6}$/,
+                        message: "Enter a valid 6-digit PIN code",
                       },
                     })}
-                    placeholder="10001"
+                    placeholder="400058"
                     className={inputClass(errors.zip)}
                   />
                   <FieldError error={errors.zip} />
@@ -415,7 +415,7 @@ const Checkout = () => {
                     {...register("cardName", {
                       required: "Name on card is required",
                     })}
-                    placeholder="John Doe"
+                    placeholder="Rohan Sharma"
                     className={inputClass(errors.cardName)}
                   />
                   <FieldError error={errors.cardName} />
@@ -533,11 +533,11 @@ const Checkout = () => {
                         {item.title}
                       </p>
                       <p className="text-gray-400 text-xs mt-0.5">
-                        Qty: {item.quantity} × ${item.price.toFixed(2)}
+                        Qty: {item.quantity} × ₹{item.price.toFixed(2)}
                       </p>
                     </div>
                     <span className="text-white font-bold text-sm">
-                      ${(item.price * item.quantity).toFixed(2)}
+                      ₹{(item.price * item.quantity).toFixed(2)}
                     </span>
                   </div>
                 ))}
@@ -601,7 +601,7 @@ const Checkout = () => {
             <div className="border-t border-gray-800 pt-4 space-y-2">
               <div className="flex justify-between text-gray-400 text-sm">
                 <span>Subtotal</span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>₹{subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-gray-400 text-sm">
                 <span>Shipping</span>
@@ -609,18 +609,18 @@ const Checkout = () => {
                   {shipping === 0 ? (
                     <span className="text-green-400">FREE</span>
                   ) : (
-                    `$${shipping.toFixed(2)}`
+                    `₹${shipping.toFixed(2)}`
                   )}
                 </span>
               </div>
               <div className="flex justify-between text-gray-400 text-sm">
-                <span>Tax</span>
-                <span>${tax.toFixed(2)}</span>
+                <span>GST (18%)</span>
+                <span>₹{tax.toFixed(2)}</span>
               </div>
               <div className="border-t border-gray-700 pt-3 flex justify-between">
                 <span className="text-white font-bold">Total</span>
                 <span className="text-white font-bold text-xl">
-                  ${total.toFixed(2)}
+                  ₹{total.toFixed(2)}
                 </span>
               </div>
             </div>

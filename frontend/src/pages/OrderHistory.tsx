@@ -74,11 +74,11 @@ const OrderHistory = () => {
                         {item.title}
                       </p>
                       <p className="text-gray-400 text-xs">
-                        Qty {item.quantity} × ${item.price.toFixed(2)}
+                        Qty {item.quantity} × ₹{item.price.toFixed(2)}
                       </p>
                     </div>
                     <p className="text-white text-sm font-semibold">
-                      ${(item.price * item.quantity).toFixed(2)}
+                      ₹{(item.price * item.quantity).toFixed(2)}
                     </p>
                   </div>
                 ))}
@@ -89,7 +89,7 @@ const OrderHistory = () => {
                   {itemCount} item{itemCount > 1 ? "s" : ""}
                 </p>
                 <p className="text-white font-bold text-lg">
-                  Total: ${order.summary?.total?.toFixed(2) || "0.00"}
+                  Total: ₹{order.summary?.total?.toFixed(2) || "0.00"}
                 </p>
               </div>
             </div>

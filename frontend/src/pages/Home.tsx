@@ -24,7 +24,7 @@ const Home = () => {
     <div className="max-w-7xl mx-auto px-4 py-10">
       <div className="text-center mb-14">
         <div className="inline-block bg-purple-600/10 border border-purple-600/20 text-purple-400 text-xs font-medium px-4 py-1.5 rounded-full mb-6">
-          ✦ Free Shipping on Orders Over $50
+          ✦ Free Shipping on Orders Over ₹499
         </div>
         <h1 className="text-5xl md:text-6xl font-bold text-white mb-5 leading-tight">
           Discover{" "}

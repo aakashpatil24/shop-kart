@@ -38,7 +38,7 @@ const CartItem = ({ item }: { item: CartItemType }) => {
           {item.category}
         </span>
         <p className="text-gray-400 text-sm mt-2">
-          ${item.price.toFixed(2)} each
+          ₹{item.price.toFixed(2)} each
         </p>
         {atStockLimit && (
           <p className="text-amber-400 text-xs mt-1">
@@ -76,7 +76,7 @@ const CartItem = ({ item }: { item: CartItemType }) => {
 
       <div className="text-right min-w-16">
         <p className="text-white font-bold text-lg">
-          ${(item.price * item.quantity).toFixed(2)}
+          ₹{(item.price * item.quantity).toFixed(2)}
         </p>
       </div>
 

@@ -107,10 +107,11 @@ params), no stack traces leaked in production.
 
 **Product Management** ("My Products" / "Sell an Item" — any authenticated user, not
 admin-only, mirrors the backend's ownership model)
+- View own listings at `/my-products` ([MyProducts.tsx](frontend/src/pages/MyProducts.tsx))
 - Create (`/sell`) and edit (`/products/:id/edit`) share one form component; edit
   pre-fills via `GET /api/products/:id` and shows a permission error up front if the
   current user isn't the owner (mirrors the backend's 403)
-- List own products, delete with confirmation
+- Delete with a confirmation prompt, calling `DELETE /api/products/:id`
 
 **Auth**
 - Register/login forms with client-side validation matching backend rules
