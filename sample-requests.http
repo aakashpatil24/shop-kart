@@ -1,0 +1,208 @@
+### Shop-Cart API sample requests
+### Use with the VS Code "REST Client" extension (humao.rest-client).
+### Run requests top-to-bottom within a section: named requests (# @name x) let
+### later requests reuse response data (e.g. {{login.response.body.data.accessToken}}).
+### Start the backend first: cd backend && npm run dev
+
+@baseUrl = http://localhost:5000/api
+
+### ================= AUTH =================
+
+### Register — success (201)
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "password": "Passw0rd!",
+  "confirmPassword": "Passw0rd!"
+}
+
+### Register — 400 validation failure (weak password, mismatched confirm, bad email)
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "name": "J",
+  "email": "not-an-email",
+  "password": "weak",
+  "confirmPassword": "different"
+}
+
+### Register — 409 duplicate email (run the success request above first)
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "name": "Jane Doe 2",
+  "email": "jane@example.com",
+  "password": "Passw0rd!",
+  "confirmPassword": "Passw0rd!"
+}
+
+### Login — success (200), returns accessToken + sets refreshToken cookie
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "jane@example.com",
+  "password": "Passw0rd!"
+}
+
+### Login — 401 bad password (generic message, does not reveal which field was wrong)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "jane@example.com",
+  "password": "wrong-password"
+}
+
+### Login — 400 validation failure (missing password)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "jane@example.com"
+}
+
+### Me — success (200), requires accessToken from the login request above
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{login.response.body.data.accessToken}}
+
+### Me — 401 missing/invalid token
+GET {{baseUrl}}/auth/me
+Authorization: Bearer not-a-real-token
+
+### Refresh token — success (200), uses the httpOnly cookie set by the login request
+# The REST Client extension automatically resends cookies captured from prior
+# responses in the same file, so no manual cookie header is needed here.
+POST {{baseUrl}}/auth/refresh-token
+
+### Refresh token — 401 invalid/expired token (no cookie, no body fallback)
+POST {{baseUrl}}/auth/refresh-token
+Content-Type: application/json
+
+{}
+
+### Logout — success (200), requires a valid accessToken
+POST {{baseUrl}}/auth/logout
+Authorization: Bearer {{login.response.body.data.accessToken}}
+
+### Logout — 401 not authenticated
+POST {{baseUrl}}/auth/logout
+
+
+### ================= PRODUCTS =================
+
+### Create product — success (201), requires a valid accessToken
+# @name createProduct
+POST {{baseUrl}}/products
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.data.accessToken}}
+
+{
+  "title": "Wireless Headphones",
+  "description": "Premium noise-cancelling wireless headphones with 30hr battery life.",
+  "price": 89.99,
+  "stock": 25,
+  "category": "electronics",
+  "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e"
+}
+
+### Create product — 401 not authenticated
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "title": "Wireless Headphones",
+  "description": "Premium noise-cancelling wireless headphones.",
+  "price": 89.99,
+  "stock": 25,
+  "category": "electronics"
+}
+
+### Create product — 400 validation failure (title too short, negative price, missing description)
+POST {{baseUrl}}/products
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.data.accessToken}}
+
+{
+  "title": "TV",
+  "description": "short",
+  "price": -5,
+  "stock": 2.5,
+  "category": ""
+}
+
+### List products — success (200), default pagination
+GET {{baseUrl}}/products
+
+### List products — success (200), with pagination + search + sort
+GET {{baseUrl}}/products?page=1&limit=5&search=headphones&sort=price_asc
+
+### List products — 400 invalid query params
+GET {{baseUrl}}/products?page=0&limit=500&sort=cheapest
+
+### Get product by id — success (200), replace :id with a real id from createProduct's response
+GET {{baseUrl}}/products/{{createProduct.response.body.data.product._id}}
+
+### Get product by id — 400 invalid Mongo id
+GET {{baseUrl}}/products/not-a-valid-id
+
+### Get product by id — 404 well-formed but non-existent id
+GET {{baseUrl}}/products/64b7f7f7f7f7f7f7f7f7f7f7
+
+### Update product — success (200), owner only
+PUT {{baseUrl}}/products/{{createProduct.response.body.data.product._id}}
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.data.accessToken}}
+
+{
+  "price": 79.99,
+  "stock": 30
+}
+
+### Update product — 400 empty body
+PUT {{baseUrl}}/products/{{createProduct.response.body.data.product._id}}
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.data.accessToken}}
+
+{}
+
+### Update product — 401 not authenticated
+PUT {{baseUrl}}/products/{{createProduct.response.body.data.product._id}}
+Content-Type: application/json
+
+{
+  "price": 1.00
+}
+
+### Update product — 403 not the owner (requires a second user's accessToken)
+# @name login2
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "someone-else@example.com",
+  "password": "Passw0rd!"
+}
+
+###
+PUT {{baseUrl}}/products/{{createProduct.response.body.data.product._id}}
+Content-Type: application/json
+Authorization: Bearer {{login2.response.body.data.accessToken}}
+
+{
+  "price": 1.00
+}
+
+### Delete product — 404 well-formed but non-existent id
+DELETE {{baseUrl}}/products/64b7f7f7f7f7f7f7f7f7f7f7
+Authorization: Bearer {{login.response.body.data.accessToken}}
+
+### Delete product — success (200), owner only
+DELETE {{baseUrl}}/products/{{createProduct.response.body.data.product._id}}
+Authorization: Bearer {{login.response.body.data.accessToken}}
